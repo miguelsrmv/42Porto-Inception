@@ -10,42 +10,20 @@
 #                                                                              #
 # **************************************************************************** #
 
-NGINX_IMAGE=my_nginx
+WP_DATA = /home/Coding/42Porto/CommonCore/Inception/data/wordpress/
+DB_DATA = /home/Coding/42Porto/CommonCore/Inception/data/mariadb/
+DOMAIN_NAME = login.42.fr
 
-nginx_build:
-	# Builds nginx image
-	sudo docker build srcs/requirements/nginx -t $(NGINX_IMAGE) 
+all: up
 
-nginx_run:
-	# Runs nginx image
-	sudo docker run -d -p 8080:80 $(NGINX_IMAGE) 
+up: build
+	@mkdir -p $(WP_DATA)
+	@mkdir -p $(DB_DATA)
+	@sudo hostsed add 127.0.0.1 $(DOMAIN_NAME)
+	@docker compose -f ./srcs/docker-compose.yml up -d
 
-nginx_clean:
-	@echo "Stopping all nginx-related containers..."
-	@CONTAINERS=$$(sudo docker ps -q --filter "ancestor=$(NGINX_IMAGE)"); \
-	if [ -n "$$CONTAINERS" ]; then \
-		sudo docker stop $$CONTAINERS; \
-	else \
-		echo "No running containers to stop."; \
-	fi
+down:
+	@docker compose -f ./srcs/docker-compose.yml down
 
-	@echo "Removing all nginx-related containers..."
-	@CONTAINERS=$$(sudo docker ps -aq --filter "ancestor=$(NGINX_IMAGE)"); \
-	if [ -n "$$CONTAINERS" ]; then \
-		sudo docker rm -f $$CONTAINERS; \
-	else \
-		echo "No stopped containers to remove."; \
-	fi
-
-	@echo "Removing all nginx-related images..."
-	@IMAGES=$$(sudo docker images -q $(NGINX_IMAGE)); \
-	if [ -n "$$IMAGES" ]; then \
-		sudo docker rmi -f $$IMAGES; \
-	else \
-		echo "No images to remove."; \
-	fi
-
-nginx_re: 
-	@make nginx_clean
-	@make nginx_build
-	@make nginx_run
+build:
+	@docker compose -f ./srcs/docker-compose.yml build
