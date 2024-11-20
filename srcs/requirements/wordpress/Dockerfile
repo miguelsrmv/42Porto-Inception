@@ -20,12 +20,10 @@ RUN apt -y update && apt install -y \
 	php-mysql \
 	php-fpm
 
-COPY ./conf/wp.conf.sh /
+COPY ./conf/wordpress_setup.sh /
 
-RUN  chmod +x wp_conf.sh
-
-RUN mkdir -p /var/www/wordpress
+RUN chmod +x wordpress_setup.sh
 
 EXPOSE 9000
 
-ENTRYPOINT ["./wordpress_conf.sh"]
+ENTRYPOINT ["./wordpress_setup.sh"]

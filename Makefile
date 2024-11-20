@@ -10,8 +10,8 @@
 #                                                                              #
 # **************************************************************************** #
 
-WP_DATA = /home/Coding/42Porto/CommonCore/Inception/data/wordpress/
-DB_DATA = /home/Coding/42Porto/CommonCore/Inception/data/mariadb/
+WP_DATA = /home/miguel/Coding/42Porto/CommonCore/Inception/data/wordpress/
+DB_DATA = /home/miguel/Coding/42Porto/CommonCore/Inception/data/mariadb/
 DOMAIN_NAME = login.42.fr
 
 all: up

@@ -12,18 +12,16 @@
 
 FROM debian:bullseye
 
-RUN apt -y update && apt install -y nginx openssl
+RUN apt -y update && apt install -y nginx openssl gettext
 
 RUN mkdir -p /etc/nginx/ssl
 
 RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 	-out /etc/ssl/nginx-selfsigned.pem -keyout /etc/ssl/nginx-selfsigned.key \
-	-subj "/C=PT/ST=Porto/L=Porto/O=42/OU=42/CN=Domain_name/UID=Db_user"
+	-subj "/C=PT/ST=Porto/L=Porto/O=42/OU=42/CN=${DOMAIN_NAME}/UID=${DB_USER}" #TODO: Change OU to 42Porto?
 
 EXPOSE 443
 
-COPY ./conf/nginx.conf /etc/nginx/conf.d/default.conf
+COPY ./conf/nginx_template.conf /etc/nginx/conf.d/nginx_template.conf
 
-COPY ./conf/index.inception.html /var/www/html/index.inception.html
-
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["/bin/bash", "-c", "envsubst '$DOMAIN_NAME' < /etc/nginx/conf.d/nginx_template.conf > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"]
