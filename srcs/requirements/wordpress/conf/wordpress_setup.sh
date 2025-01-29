@@ -7,7 +7,7 @@ chmod +x wp-cli.phar
 
 mv wp-cli.phar /usr/local/bin/wp
 
-#2 Step 2: Create WP install dir and edit its permissions
+#2 Step 2: Create WP install directory and edit its permissions
 mkdir -p /var/www/wordpress
 
 cd /var/www/wordpress
@@ -18,22 +18,22 @@ chown -R www-data:www-data /var/www/wordpress
 
 #3 Step 3: Ping Maria DB to check it's up and running
 ping_mariadb_container() {
-    nc -zv mariadb 3306 > /dev/null 2>&1
+	nc -zv mariadb 3306 >/dev/null 2>&1
 }
 
 end_time=$(($(date +%s) + 20))
 while [ $(date +%s) -lt $end_time ]; do
-    if ping_mariadb_container; then
-        echo "** MariaDB is UP **"
-        break
-    else
-        echo "** Waiting for MariaDB ... **"
-        sleep 1
-    fi
+	if ping_mariadb_container; then
+		echo "** MariaDB is UP **"
+		break
+	else
+		echo "** Waiting for MariaDB ... **"
+		sleep 1
+	fi
 done
 
 if [ $(date +%s) -ge $end_time ]; then
-    echo "** MariaDB is NOT RESPONDING **"
+	echo "** MariaDB is NOT RESPONDING **"
 fi
 
 #4 Step 4: Install WP
