@@ -10,7 +10,9 @@
 #                                                                              #
 # **************************************************************************** #
 
-include srcs/.env
+WP_DATA = ~/data/wordpress/
+DB_DATA = ~/data/mariadb/
+DOMAIN_NAME = mde-sa--.42.pt
 
 all: up
 
