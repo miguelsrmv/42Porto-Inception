@@ -24,4 +24,8 @@ EXPOSE 443
 
 COPY ./conf/nginx_template.conf /etc/nginx/conf.d/nginx_template.conf
 
-ENTRYPOINT ["/bin/bash", "-c", "envsubst '$DOMAIN_NAME' < /etc/nginx/conf.d/nginx_template.conf > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"]
+COPY ./conf/nginx_setup.sh /
+
+RUN chmod +x nginx_setup.sh
+
+ENTRYPOINT ["./nginx_setup.sh"]
