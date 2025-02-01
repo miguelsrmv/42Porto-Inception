@@ -1,5 +1,0 @@
-# APT get update/upgrade
-# Ensure make, git, hotsed, docker are installed on VM
-# (optional) Install VScode / VIM / Neovim ??
-# Install Vbox Guest Additions to then mount a shared folder between guest and host
-# Change .env, makefile locations
