@@ -16,11 +16,11 @@ DOMAIN_NAME = mde-sa--.42.pt
 
 all: up
 
-up: build
+up:
 	@mkdir -p $(WP_DATA)
 	@mkdir -p $(DB_DATA)
 	@sudo hostsed add 127.0.0.1 $(DOMAIN_NAME)
-	@docker compose -f ./srcs/docker-compose.yml up -d
+	@docker compose -f ./srcs/docker-compose.yml up --build -d
 
 down:
 	@docker compose -f ./srcs/docker-compose.yml down
@@ -55,4 +55,4 @@ status:
 	@docker network ls
 	@echo ""
 	
-.PHONY: all up down build clean re
+.PHONY: all up down build clean re phony prune

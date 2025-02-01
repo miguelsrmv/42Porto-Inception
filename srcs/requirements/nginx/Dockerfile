@@ -18,7 +18,7 @@ RUN mkdir -p /etc/nginx/ssl
 
 RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 	-out /etc/ssl/nginx-selfsigned.pem -keyout /etc/ssl/nginx-selfsigned.key \
-	-subj "/C=PT/ST=Porto/L=Porto/O=42/OU=42/CN=${DOMAIN_NAME}/UID=${DB_USER}" #TODO: Change OU to 42Porto?
+	-subj "/C=PT/ST=Porto/L=Porto/O=42/OU=42Porto/CN=${DOMAIN_NAME}/UID=${DB_USER}"
 
 EXPOSE 443
 
